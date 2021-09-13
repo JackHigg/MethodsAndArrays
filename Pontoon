@@ -1,0 +1,223 @@
+package MethodsAndArraysWeek1;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.util.*;
+
+public class Tutorial1d {
+
+    static Scanner kboard = new Scanner(System.in);
+    static DecimalFormat df = new DecimalFormat("###.oo");
+
+
+
+
+    public static void main(String[] args) {
+
+        ArrayList<Integer> AllCardsDrawn = new ArrayList<Integer>();
+
+
+        int GameWins=0;
+
+        for(int x=1; x<=1; x++) {
+
+            ArrayList<Integer> cards = new ArrayList<Integer>();
+
+            System.out.println("\n----------------------------");
+            System.out.println("\nCommencing game "+x);
+
+
+            cards.add(GenerateCard());
+            cards.add(GenerateCard());
+
+            System.out.println("\nDrawing 2 cards...");
+
+            for (int i : cards) {
+                System.out.println("Card drawn: "+i);
+            }
+
+
+            String choice;
+
+            int total;
+            int House;
+
+            House = GenerateHouse();
+            //System.out.println("\nHouse is "+House);
+
+
+            total = GetTotal(cards);
+            //System.out.println("\n"+total);
+
+            System.out.println("\nDo you wish to draw another card? y/n");
+            choice = kboard.next();
+
+            boolean busted = busted(total);
+
+
+            while (choice.equalsIgnoreCase("y") && !busted) {
+
+                cards.add(GenerateCard());
+
+                System.out.println("\nYour new card is " + cards.get(cards.size() - 1));
+
+                total = total + cards.get(cards.size() - 1);
+
+                System.out.println("Your total is "+total);
+
+                busted = busted(total);
+                //System.out.println(busted);
+
+                if (!busted) {
+                    System.out.println("\nDo you wish to draw another card? y/n");
+                    choice = kboard.next();
+                }
+
+
+            }
+
+            boolean result = GetResult(total);
+
+//        if(busted){
+//            System.out.println("Busted your cards total "+total+ " which is over 21");
+//        }
+//        else
+//        if(result)
+//        {
+//            System.out.println("You have won with "+total+ " the house has "+House);
+//        }
+//        else
+//        {
+//            System.out.println("\nYou have lost with "+total+ " the house has "+House);
+//        }
+
+            String BustTxt = "\nBusted your cards total " + total + " which is over 21";
+            String WinTxt = "\nYou have won with " + total + " the house has " + House;
+            String LostTxt = "\nYou have lost with " + total + " the house has " + House;
+
+            String GameMessage = busted ? BustTxt : (result ? WinTxt : LostTxt);
+            System.out.println(GameMessage);
+
+            GameWins = (GameMessage.equalsIgnoreCase(WinTxt)) ? GameWins+1 : GameWins;
+
+            AllCardsDrawn.addAll(cards);
+
+        }
+
+        double GameWinPercentage = GameWins;
+        GameWinPercentage = (GameWinPercentage/5)*100;
+        //System.out.println("\ntest "+GameWinPercentage);
+
+
+
+//        for (int i : AllCardsDrawn) {
+//            System.out.println("All Cards drawn: "+i);
+//        }
+
+        System.out.println("\n*Games won: "+GameWins);
+        //System.out.println("*Win rate in %: "+Math.round(GameWinPercentage)+"%");
+        System.out.println("*Win rate in %: "+df.format(GameWinPercentage)+"%");
+
+        System.out.println("\nHistogram showing frequency of each card drawn:");
+
+        System.out.println("1 : "+
+                Collections.frequency(AllCardsDrawn, 1));
+        System.out.println("2 : "+
+                Collections.frequency(AllCardsDrawn, 2));
+        System.out.println("3 : "+
+                Collections.frequency(AllCardsDrawn, 3));
+        System.out.println("4 : "+
+                Collections.frequency(AllCardsDrawn, 4));
+        System.out.println("5 : "+
+                Collections.frequency(AllCardsDrawn, 5));
+        System.out.println("6 : "+
+                Collections.frequency(AllCardsDrawn, 6));
+        System.out.println("7 : "+
+                Collections.frequency(AllCardsDrawn, 7));
+        System.out.println("8 : "+
+                Collections.frequency(AllCardsDrawn, 8));
+        System.out.println("9 : "+
+                Collections.frequency(AllCardsDrawn, 9));
+        System.out.println("10 : "+
+                Collections.frequency(AllCardsDrawn, 10));
+
+    }
+
+    public static int GenerateCard(){
+
+
+        int Newcard = 0;
+
+        for (int x = 0; x < 1; x++) {
+            Newcard = (int) (Math.random() * 10) +1;
+
+        }
+
+        return Newcard;
+    }
+
+    public static int GenerateHouse(){
+
+        int value=0;
+
+        for (int x = 0; x < 1; x++) {
+            value = (int) (Math.random() * 10) +16;
+
+        }
+
+        return value;
+    }
+
+    public static int GetTotal(ArrayList<Integer> cards){
+
+        int total=0;
+        int x=0;
+
+        for (int i :cards) {
+            total = total + cards.get(x);
+            x++;
+
+        }
+
+        return total;
+    }
+
+    public static boolean GetResult(int total){
+
+//        Boolean Result = (total >19 && total<=21) ? true : false;
+//        return Result;
+
+        return ( total >19 && total <= 21 ? true : false);
+
+
+
+
+//        if (total > 19 && total <= 21)
+//        {
+//            return true;
+//        }
+//        else
+//        {
+//            return false;
+//        }
+
+    }
+
+    public static boolean busted(int total){
+
+//        if(total >21)
+//        {
+//            return true;
+//        }
+//        else
+//        {
+//            return false;
+//        }
+
+        return ( total >21 ? true : false); // ternary operator in return to shorten code
+
+    }
+
+
+}
