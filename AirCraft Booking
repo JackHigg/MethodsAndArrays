@@ -1,0 +1,198 @@
+package MethodsAndArraysWeek1MiniAircraft;
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class Tutorial2c {
+
+    static Scanner kboard = new Scanner(System.in);
+    static DecimalFormat df = new DecimalFormat("##.00");
+
+    public static void main (String[] args)
+    {
+
+        int choice=0;
+        final int NoSeats=14;
+        final double CostOfSeat=100;
+
+
+        String Passengername[] = new String[NoSeats];
+        int PassengerType[] = new int[NoSeats];
+
+        while(choice!=5)
+        {
+            System.out.println("\nPlease choice a option\n" +
+                    "1.\tBook a seat \n" +
+                    "2.\tDisplay all seats showing passenger details\n" +
+                    "3.\tCancel a seat \n" +
+                    "4.\tDisplay report of total takings\n" +
+                    "5.\tExit program.\n");
+            choice=kboard.nextInt();
+
+            switch (choice)
+            {
+                case 1:
+                    System.out.println("\nOption 1 : Book a seat chosen");
+
+                    Takings(Passengername);
+                    Booking(GetName(), GetSeatNumber(),GetPassengerType(),Passengername,PassengerType, CostOfSeat);
+
+                    break;
+
+                case 2:
+
+                    System.out.println("\nOption 2 : Display all seats showing passenger details chosen");
+
+                     DisplaySeats(Passengername);
+
+//                     for(int i : PassengerType){
+//                         System.out.println(i);
+//
+//                }
+
+
+                    break;
+
+                case 3:
+
+                    System.out.println("\nOption 3 : Cancel a seat chosen");
+
+                    CancelBooking(Passengername);
+
+                    break;
+
+                case 4:
+
+                    System.out.println("\nOption 4 : Display report of total takings chosen");
+
+                    Takings(Passengername);
+
+                    break;
+                case 5:
+
+                    System.out.println("\nOption 5 : Exit Program chosen");
+                    System.out.println("\nNow exiting ... goodbye");
+
+                    break;
+
+                default:  System.out.println("\nInvalid Option number chosen");  break;
+
+
+
+            }
+
+
+
+        }
+
+
+
+
+    }
+
+
+    public static String GetName()
+    {
+        String Name= " ";
+
+        System.out.println("\nPlease enter full name of passenger");
+        Name=kboard.next()+kboard.nextLine();
+
+        return Name;
+    }
+
+    public static int GetPassengerType()
+    {
+        int Type=0;
+
+        System.out.println("\nPlease enter type of passenger " +
+                "\n1 : business " +
+                "\n2 : local " +
+                "\n3 : leisure");
+        Type=kboard.nextInt();
+
+        return Type;
+    }
+
+    public static int GetSeatNumber()
+    {
+        int SeatNumber=0;
+
+        System.out.println("\nPlease enter Seat number");
+        SeatNumber=kboard.nextInt();
+
+        return SeatNumber;
+    }
+
+    public static void GetCost(double costOfSeat, int type){
+
+        double cost=0;
+        double Charge=0;
+
+
+        Charge = (type==1) ? 1.2 : (type ==2) ? 1 : 1.1;
+
+        cost = costOfSeat*Charge;
+
+        System.out.println("\nTotal cost £"+df.format(cost));
+
+
+    }
+
+    public static void DisplaySeats(String Passengername[]){
+
+        System.out.println("\nDisplaying all seats and Passenger names");
+
+     for(int i=1; i<Passengername.length+1;i++){
+         System.out.println("Seat number : "+i+" Passenger : "+Passengername[i-1]);
+     }
+
+    }
+
+    public static void Takings(String Passengername[]) {
+
+       System.out.println("\nSeats Available");
+
+        for(int i=1; i<Passengername.length+1;i++){
+            if(Passengername[i-1]==null) {
+                System.out.println("Seat number : " + i + " Passenger : " + Passengername[i - 1]);
+            }
+        }
+
+
+    }
+
+    public static void Booking(String name, int type, int SeatNumber,String Passengername[], int PassengerType[], double costOfSeat ){
+
+        Passengername[SeatNumber-1]= name;
+        PassengerType[SeatNumber-1]=type;
+
+
+         String Type = "" ;
+         Type = (type==1) ? "Business" : (type==2) ? "Local" : "Leisure";
+
+        System.out.println("\nBooking completed! \n\nPassenger name: "+name+"\nSeat number: "+SeatNumber+"\nPassenger type: "+Type );
+        GetCost(costOfSeat, type);
+
+    }
+
+    public static void CancelBooking(String Passengername[]){
+
+        System.out.println("\nDisplaying all seats and Passenger names");
+
+        for(int i=1; i<Passengername.length+1;i++){
+            System.out.println("Seat number : "+i+" Passenger : "+Passengername[i-1]);
+        }
+
+        int Delete=0;
+
+        System.out.println("\nPlease enter seat number of booking you would like to cancel 1-14");
+        Delete=kboard.nextInt();
+
+        Passengername[Delete-1]= null;
+
+    }
+
+
+
+}
